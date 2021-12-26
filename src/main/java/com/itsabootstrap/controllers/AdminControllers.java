@@ -3,6 +3,7 @@ package com.itsabootstrap.controllers;
 import com.itsabootstrap.model.User;
 import com.itsabootstrap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,9 @@ public class AdminControllers {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
     @GetMapping(value = "/allusers")
     public String userList(Model model, Principal detail) {
         User user = new User();
@@ -30,6 +34,7 @@ public class AdminControllers {
 
     @PostMapping(value = "/list/save")
     public String saveOrUpdateUser(@ModelAttribute("user") User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
         userService.saveOrUpdateUser(user);
         return "redirect:/admin/allusers";
     }
