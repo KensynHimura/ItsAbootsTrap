@@ -25,7 +25,7 @@ public class UserControllers {
     }
 
     @GetMapping(value = "/denied")
-    public String dangerUser() {
+    public String deniedAccess() {
         return "user/denied";
     }
 }
