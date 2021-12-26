@@ -15,12 +15,8 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminControllers {
 
-    private final UserService userService;
-
     @Autowired
-    public AdminControllers(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userService;
 
     @GetMapping(value = "/allusers")
     public String userList(Model model, Principal detail) {
@@ -38,24 +34,10 @@ public class AdminControllers {
         return "redirect:/admin/allusers";
     }
 
-//    @GetMapping(value = "adduser")
-//    public String addUser(Model model) {
-//        User user = new User();
-//        model.addAttribute("user", user);
-//        return "userinfo";
-//    }
-
     @PostMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/admin/allusers";
     }
-
-//    @GetMapping("userinfo/{id}")
-//    public String userInfo(@PathVariable("id") Long id, Model model) {
-//        model.addAttribute("user", this.userService.getUserByID(id));
-//        return "userinfo";
-//    }
-
 }
 
